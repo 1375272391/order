@@ -45,6 +45,7 @@
 		登录成功<br>
 		当前登录 <?php echo $kname; ?> <br>
 		取餐地址 <?php echo $paddress; ?> <br>
+		<a href="kitchen.php">重新登录</a>
 		<?php 
 			}
 		?>
