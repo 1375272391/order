@@ -17,17 +17,7 @@
 			else
 				echo "失败".mysql_error()."<br>";
 			$query = mysql_query("SELECT * FROM user", $db);
-			while($shuzu=mysql_fetch_array($query)){
-				echo "<br>";
-				echo "订单号: ".$shuzu[0]."<br>";
-				echo "用户名: ".$shuzu[1]."<br>";
-				echo "送餐电话: ".$shuzu[2]."<br>";
-				echo "送餐地址: ".$shuzu[3]."<br>";
-				echo "取餐地址: ".$shuzu[4]."<br>";
-				echo "点餐内容: ".$shuzu[5]."<br>";
-				echo "下单时间: ".$shuzu[6]."<br>";
-				echo "<hr>";
-			}
+			
 		?>
 
 		
@@ -59,9 +49,40 @@
 			}
 		?>
 
-
+		<form action="" method="post">
+		
 		<?php
-			print_r($_POST);
+			// print_r($_POST);
+			echo "<br>";
+			date_default_timezone_set("Asia/Shanghai");
+			$ct = date("Y-m-d H:i:s");
+			echo "当前时间".$ct;
+			echo "<hr>";
+			while($shuzu=mysql_fetch_array($query)){
+				echo "<br>";
+				echo "订单号: ".$shuzu[0]."<br>";
+				echo "用户名: ".$shuzu[1]."<br>";
+				echo "送餐电话: ".$shuzu[2]."<br>";
+				echo "送餐地址: ".$shuzu[3]."<br>";
+				echo "取餐地址: ".$shuzu[4]."<br>";
+				echo "点餐内容: ".$shuzu[5]."<br>";
+				echo "餐品状态: ".$shuzu[7]."<br>";
+				echo "配送状态: ".$shuzu[8]."<br>";
+				echo "下单时间: ".$shuzu[6]."<br>";
 		?>
+		<input type="submit" value="<?php echo $shuzu[0]?>" name="pick"/>
+		<input type="submit" value="<?php echo $shuzu[0]?>" name="wait"/>
+		<hr >
+		<?php }?>
+		<?php
+			if ($_POST['pick']) {
+				mysql_query("UPDATE user SET foodstatus='取餐' WHERE id=$_POST[pick]", $db);
+			}elseif ($_POST['wait']) {
+				mysql_query("UPDATE user SET foodstatus='等餐' WHERE id=$_POST[wait]", $db);
+			}
+		?>
+
+		<?php print_r($_POST);?>
+		</form>
 	</body>
 </html>
